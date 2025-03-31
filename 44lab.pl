@@ -1,21 +1,9 @@
-% Претенденты:
-% A, B, C, D, E, F, G, H
-
-% Обязанности:
-% biologist, hydrologist, meteorologist, radio operator, mechanic, doctor
-
-% Правила для проверки ограничений:
-% F не может ехать без B
 cannot_go_together(f, b).
-% D не может ехать без C и H
 cannot_go_together(d, c).
 cannot_go_together(d, h).
-% C не может ехать с G
 cannot_go_together(c, g).
-% A не может ехать с B
 cannot_go_together(a, b).
 
-% Определим возможные профессии для каждого кандидата
 biologist(e).
 biologist(g).
 
@@ -34,7 +22,6 @@ mechanic(h).
 doctor(a).
 doctor(d).
 
-% Правила для назначения обязанностей с учетом ограничений
 assign_biologist(Biologist) :- biologist(Biologist).
 assign_hydrologist(Hydrologist) :- hydrologist(Hydrologist).
 assign_meteorologist(Meteorologist) :- meteorologist(Meteorologist).
@@ -42,11 +29,9 @@ assign_radio_operator(RadioOperator) :- radio_operator(RadioOperator).
 assign_mechanic(Mechanic) :- mechanic(Mechanic).
 assign_doctor(Doctor) :- doctor(Doctor).
 
-% Правила для проверки, не нарушены ли ограничения
 valid_assignment(Biologist, Hydrologist, Meteorologist, RadioOperator, Mechanic, Doctor) :-
-    % Проверка на уникальность
+
     all_unique([Biologist, Hydrologist, Meteorologist, RadioOperator, Mechanic, Doctor]),
-    % Проверка ограничений
     not(cannot_go_together(Biologist, Hydrologist)),
     not(cannot_go_together(Biologist, Meteorologist)),
     not(cannot_go_together(Biologist, RadioOperator)),
@@ -63,13 +48,11 @@ valid_assignment(Biologist, Hydrologist, Meteorologist, RadioOperator, Mechanic,
     not(cannot_go_together(RadioOperator, Doctor)),
     not(cannot_go_together(Mechanic, Doctor)).
 
-% Правило для проверки уникальности значений (чтобы ни один кандидат не был выбран дважды)
 all_unique([]).
 all_unique([H|T]) :-
     not(member(H, T)),
     all_unique(T).
 
-% Стартовая процедура
 start :-
     assign_biologist(Biologist),
     assign_hydrologist(Hydrologist),
@@ -78,10 +61,10 @@ start :-
     assign_mechanic(Mechanic),
     assign_doctor(Doctor),
     valid_assignment(Biologist, Hydrologist, Meteorologist, RadioOperator, Mechanic, Doctor),
-    write('Решение: '), nl,
-    write('Биолог: '), write(Biologist), nl,
-    write('Гидролог: '), write(Hydrologist), nl,
-    write('Синоптик: '), write(Meteorologist), nl,
-    write('Радист: '), write(RadioOperator), nl,
-    write('Механик: '), write(Mechanic), nl,
-    write('Врач: '), write(Doctor), nl.
+    write('Р РµС€РµРЅРёРµ: '), nl,
+    write('Р‘РёРѕР»РѕРі: '), write(Biologist), nl,
+    write('Р“РёРґСЂРѕР»РѕРі: '), write(Hydrologist), nl,
+    write('РЎРёРЅРѕРїС‚РёРє: '), write(Meteorologist), nl,
+    write('Р Р°РґРёСЃС‚: '), write(RadioOperator), nl,
+    write('РњРµС…Р°РЅРёРє: '), write(Mechanic), nl,
+    write('Р’СЂР°С‡: '), write(Doctor), nl.
